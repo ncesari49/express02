@@ -16,7 +16,7 @@ const movieHandlers = require("./movieHandlers");
 app.get("/api/movies", movieHandlers.getMovies);
 app.get("/api/movies/:id", movieHandlers.getMovieById);
 app.get("/api/users", movieHandlers.getUser)
-app.get("/api/users", movieHandlers.getUserByID)
+app.get("/api/users/:id", movieHandlers.getUserByID)
 
 app.listen(port, (err) => {
   if (err) {
