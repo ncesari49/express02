@@ -31,6 +31,24 @@ const getMovieById = (req, res) => {
     });
 };
 
+const postMovie = (req, res) => {
+  const { title, director, year, color, duration } = req.body
+  console.log(req.body);
+
+  database
+    .query(
+      "INSERT INTO movies(title, director, year, color, duration) VALUES (?, ?, ?, ?, ? )", [title, director, year, color, duration]
+    )
+    .then(([result]) => {
+      res.location(`/api/movies/${result.insertId}`).sendStatus(201)
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("error saving movie")
+    })
+}
+
+
 const getUser = (req, res) => {
   database
     .query("select * from users")
@@ -54,6 +72,21 @@ const getUserByID = (req, res) => {
     })
 }
 
+const createUser = (req, res) => {
+  const { firstname, lastname, email, city, language } = req.body
+  database
+    .query("INSERT INTO users (firstname, lastname, email, city, language) VALUES (?, ?, ?, ?, ?)",
+      [firstname, lastname, email, city, language]
+    )
+    .then(([result]) => {
+      res.location(`/api/users/${result.insertId}`).sendStatus(201)
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("error saving user")
+    })
+}
+
 
 
 module.exports = {
@@ -61,6 +94,8 @@ module.exports = {
   getMovieById,
   getUser,
   getUserByID,
+  postMovie,
+  createUser,
 };
 
 
