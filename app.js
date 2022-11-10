@@ -19,6 +19,8 @@ app.get("/api/users", movieHandlers.getUser)
 app.get("/api/users/:id", movieHandlers.getUserByID)
 app.post("/api/movies", movieHandlers.postMovie)
 app.post("/api/users", movieHandlers.createUser)
+app.put("/api/movies/:id", movieHandlers.editMovie)
+app.put("/api/users/:id", movieHandlers.editUser)
 
 app.listen(port, (err) => {
   if (err) {
