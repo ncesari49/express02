@@ -67,6 +67,24 @@ const editMovie = (req, res) => {
     })
 }
 
+const deleteMovie = (req, res) => {
+  const id = parseInt(req.params.id)
+  database
+    .query("DELETE FROM movies WHERE id=?", [id])
+    .then(([result]) => {
+      if (result.affectedRows == 0) {
+        res.status(404).send("not found")
+      } else {
+        res.status(204)
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("error deleting movie")
+    })
+
+}
+
 
 const getUser = (req, res) => {
   database
@@ -110,7 +128,7 @@ const editUser = (req, res) => {
   const { firstname, lastname, email, city, language } = req.params
   const id = parseInt(req.params.id)
   database
-    .query("UPDATE movie SET firstname=?, lastname=?, email=?, city=?, language=? WHERE id=?", [firstname, lastname, email, city, language, id])
+    .query("UPDATE movies SET firstname=?, lastname=?, email=?, city=?, language=? WHERE id=?", [firstname, lastname, email, city, language, id])
     .then(([result]) => {
       if (result.affectedRows == 0) {
         res.status(404).send("not found")
@@ -120,6 +138,24 @@ const editUser = (req, res) => {
       console.log(err);
       res.status(500).send("error editing movie")
     })
+}
+
+const deleteUser = (req, res) => {
+  const id = parseInt(req.params.id)
+  database
+    .query("DELETE FROM users WHERE id=?", [id])
+    .then(([result]) => {
+      if (result.affectedRows == 0) {
+        res.status(404).send("not found")
+      } else {
+        res.status(204)
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("error deleting user")
+    })
+
 }
 
 
@@ -133,6 +169,8 @@ module.exports = {
   createUser,
   editUser,
   editMovie,
+  deleteMovie,
+  deleteUser,
 };
 
 
